@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = 3000;
-const userRouter = require('./routes/user/');
+const userRouter = require('./server/routes/user');
+
 
 
 
@@ -61,54 +62,3 @@ module.exports = app;
 //     console.log(`Server listening on port: ${PORT}...`)
 // });
 // module.exports = app;
-// CREATE TABLE users (
-//     id SERIAL PRIMARY KEY,
-//     username VARCHAR(255),
-//     password VARCHAR(255),
-//     children_id INT
-// );
-// CREATE TABLE children (
-//     id SERIAL PRIMARY KEY,
-//     child_name VARCHAR(255),
-//     child_info_id INT
-// );
-// CREATE TABLE child_info (
-//     id SERIAL PRIMARY KEY,
-//     birthday DATE,
-//     gender VARCHAR(255),
-//     length DECIMAL,
-//     feedings_id INT,
-//     naps_id INT,
-//     weights_id INT
-// );
-// CREATE TABLE feedings (
-//     id SERIAL PRIMARY KEY,
-//     feeding_start TIMESTAMP,
-//     feeding_end TIMESTAMP,
-//     type_of_feeding VARCHAR(255)
-// );
-// CREATE TABLE naps (
-//     id SERIAL PRIMARY KEY,
-//     "nap_start" TIMESTAMP,
-//     "nap_end" TIMESTAMP
-//     );
-// CREATE TABLE weights (
-//     id SERIAL PRIMARY KEY,
-//     weight_date DATE,
-//     weight DECIMAL
-// );
-
-// DROP TABLE users;
-// DROP TABLE children;
-// DROP TABLE child_info;
-
-// ALTER TABLE "users" ADD CONSTRAINT "users_fk0" FOREIGN KEY ("children_id") REFERENCES "children"("id");
-
-// ALTER TABLE "children" ADD CONSTRAINT "children_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
-
-
-// ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk0" FOREIGN KEY ("feedings_id") REFERENCES "feedings"("id");
-// ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk1" FOREIGN KEY ("naps_id") REFERENCES "naps"("id");
-// ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk2" FOREIGN KEY ("weights_id") REFERENCES "weights"("id");
-
-
