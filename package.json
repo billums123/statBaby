@@ -5,6 +5,9 @@
     "dev": "concurrently \"NODE_ENV=development nodemon server/server.js\" \"NODE_ENV=development webpack serve --hot --open\""
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.5",
     "concurrently": "^6.0.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
@@ -13,6 +16,7 @@
     "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.0",
     "sass": "^1.54.9",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
