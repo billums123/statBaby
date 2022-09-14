@@ -1,15 +1,25 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login'
+import theme from './theme';
+import {styled} from '@mui/system'
 
+const RootDiv = styled('div')({
+  minHeight: '100vh',
+  backgroundColor: theme.palette.primary.main,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
+
+})
 function App() {
     return (
-      <div>
-        <Routes>
+      <RootDiv>
+        test
+        {/* <Routes>
           <Route path="/" element={<Login />}/>
         Hi from app
-        </Routes>
-      </div>
+        </Routes> */}
+      </RootDiv>
     );
   }
   
