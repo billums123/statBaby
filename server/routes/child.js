@@ -16,4 +16,7 @@ router.delete("/", childController.deleteChild, (req, res) => {
   res.sendStatus(200).json(console.log('deleted child!'));
 });
 
+router.put("/", childController.updateChild, (req, res) => {
+  res.sendStatus(200).json(console.log('updated child\'s info!'));
+});
 module.exports = router;

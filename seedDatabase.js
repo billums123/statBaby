@@ -11,20 +11,24 @@
 // );
 // CREATE TABLE children (
 //     id SERIAL PRIMARY KEY,
-//     child_firstname VARCHAR(255),
-//     child_lastname VARCHAR(255),
-//     child_nickname VARCHAR(255),
-//     users_id INT,
-//     child_info_id INT
-// );
-// CREATE TABLE child_info (
-//     id SERIAL PRIMARY KEY,
-//     birthday DATE,
-//     gender VARCHAR(255),
-//     feedings_id INT,
-//     naps_id INT,
-//     lengths_id INT,
-//     weights_id INT
+    // child_firstname VARCHAR(255),
+    // child_lastname VARCHAR(255),
+    // child_nickname VARCHAR(255),
+    // users_id INT,
+    //     child_info_id INT
+    // );
+//     CREATE TABLE child_info (
+//         id SERIAL PRIMARY KEY,
+//         child_firstname VARCHAR(255),
+//         child_lastname VARCHAR(255),
+//         child_nickname VARCHAR(255),
+//         birthday DATE,
+//         gender VARCHAR(255),
+//         feedings_id INT,
+//         naps_id INT,
+//         lengths_id INT,
+//         weights_id INT,
+//         users_id INT
 // );
 // CREATE TABLE feedings (
 //     id SERIAL PRIMARY KEY,
@@ -51,10 +55,12 @@
 // //ADD FOREIGN KEYS
 // ALTER TABLE "children" ADD CONSTRAINT "children_fk0" FOREIGN KEY ("users_id") REFERENCES "users"("id");
 // ALTER TABLE "children" ADD CONSTRAINT "children_fk1" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
+// ALTER TABLE "child_info" ADD COLUMN "users_id" INT;
 // ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk0" FOREIGN KEY ("feedings_id") REFERENCES "feedings"("id");
 // ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk1" FOREIGN KEY ("naps_id") REFERENCES "naps"("id");
 // ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk2" FOREIGN KEY ("lengths_id") REFERENCES "lengths"("id");
 // ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk3" FOREIGN KEY ("weights_id") REFERENCES "weights"("id");
+// ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk4" FOREIGN KEY ("users_id") REFERENCES "users"("id");
 
 
 // //DELETE TABLES
