@@ -14,8 +14,8 @@ const userController = {
     ];
     db.query(text, values)
       .then((response) => {
-        console.log(response);
-        res.locals.newUser = response;
+        // console.log(response);
+        // res.locals.newUser = response;
         next();
       })
       .catch((err) => {
@@ -26,17 +26,39 @@ const userController = {
           },
         });
       });
-  },
-
-  verifyUser: (req, res, next) => {
+    },
+    
+    verifyUser: (req, res, next) => {
+        console.log('body', req.body)
     const { username, password } = req.body;
-    const text = "SELECT password FROM users WHERE username = $1";
-    const values = username;
+    const text = "SELECT password, id FROM users WHERE username = $1";
+    const values = [username];
     db.query(text, values)
     .then((response) => {
-        console.log('Login Response', response);
+        //no encrypting currently, just checks for a match of username and password, look at later if time allows
+        response.rows.forEach(user => {
+            if(password === user.password) {
+                res.locals.id = user.id;
+                console.log('success!')
+            }
+        });
+        if(!res.locals.id) {
+            //Still need to do something if user/password are incorrect
+            // res.locals.failedToLogin = true;
+            console.log('Username or password are incorrect!')
+            res.redirect('client/404.html')
+        }
+        next();
     })
-  },
+    .catch((err) => {
+      next({
+        status: 404,
+        message: {
+          err: "Error with request to login, please review input fields",
+        },
+      });
+    });
+},
 };
 
 module.exports = userController;

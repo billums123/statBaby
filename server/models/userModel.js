@@ -1,6 +1,5 @@
 const { Pool } = require('pg');
 
-const PG_URI = ''; 
 const credentials = {
     user: "thesterman",
     host: "localhost",

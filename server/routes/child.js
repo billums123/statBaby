@@ -1,0 +1,19 @@
+const express = require("express");
+const router = express.Router();
+const childController = require('../controllers/childController');
+
+router.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
+router.post("/", childController.addChild, (req, res) => {
+  res.sendStatus(200).json(console.log('added child!'));
+});
+
+// router.put("/", (req, res) => {});
+
+router.delete("/", childController.deleteChild, (req, res) => {
+  res.sendStatus(200).json(console.log('deleted child!'));
+});
+
+module.exports = router;

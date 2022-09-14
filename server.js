@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const userRouter = require('./server/routes/user');
+const childRouter = require('./server/routes/child');
 
 
 
@@ -16,7 +17,8 @@ app.get('/', (req, res) => {
 })
 
 //define route handler
-app.use('/user', userRouter);
+app.use('/user', userRouter); //login and create new user
+app.use('/child', childRouter); //add or delete child from account
 
 //redirect to 404.html if page does not exist
 app.use((req, res) => {
