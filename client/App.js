@@ -6,19 +6,18 @@ import {styled} from '@mui/system'
 
 const RootDiv = styled('div')({
   minHeight: '100vh',
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.secondary.light,
   backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+  backgroundRepeat: 'no-repeat',
+  
 
 })
 function App() {
     return (
       <RootDiv>
-        test
-        {/* <Routes>
+        <Routes>
           <Route path="/" element={<Login />}/>
-        Hi from app
-        </Routes> */}
+        </Routes>
       </RootDiv>
     );
   }

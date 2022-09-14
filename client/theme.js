@@ -4,13 +4,16 @@ const theme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#ff4400',
+    //   main: '#CAD2C5',
+      main: '#84A98C',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      light: '#0066ff',
-      main: '#0044ff',
+      light: '#CAD2C5',
+      main: '#354F52',
+    //   #52796F Hookers Green
+    //   #2F3E46 Charcoal
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
@@ -21,7 +24,7 @@ const theme = createTheme({
     custom: {
       light: '#ffa726',
       main: '#f57c00',
-      dark: '#ef6c00',
+      dark: '#2F3E46',
       contrastText: 'rgba(0, 0, 0, 0.87)',
     }
     // Used by `getContrastText()` to maximize the contrast between
@@ -35,6 +38,43 @@ const theme = createTheme({
 
     // tonalOffset: 0.2,
   },
+//   typography: {
+//     // fontFamily: 'UntitledSans',
+    
+//     body1: {
+//       fontSize: 12,
+//     },
+//     body2: {
+//       fontSize: 16,
+//     },
+//     subtitle1: {
+//       fontSize: 15,
+//       color: '#686868',
+//     },
+//     subtitle2: {
+//       fontSize: 15,
+//       fontWeight: 'bold',
+//     },
+//     h1: {
+//       fontWeight: 'bold',
+//     },
+//     h2: {
+//       fontWeight: 'bold',
+//     },
+//     h3: {
+//       fontWeight: 'bold',
+//     },
+//     h4: {
+//       fontWeight: 'bold',
+//     },
+//     h5: {
+//       fontWeight: 'bold',
+//     },
+//     h6: {
+//       fontWeight: 'bold',
+//     },
+//     fontWeightMedium: 'bold',
+//   },
 });
 
 export default theme;
