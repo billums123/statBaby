@@ -1,15 +1,17 @@
 const db = require("../models/userModel");
 
-const childController = {
+const feedingsController = {
   //get child_info from child_info table where id of user matches user_id
   getChildren: (req, res, next) => {
-    const { users_id } = req.body;
+    const { users_id, child_info_id } = req.body;
     const text =
-      "SELECT c.* FROM users u JOIN child_info c ON c.users_id = u.id WHERE c.users_id = $1";
+      "SELECT c.*, ci.*, FROM users u JOIN child_info c ON c.users_id = u.id JOIN child_info ci ON c.child_info_id = ci.id ";
+    //   "SELECT c.*, ci.* FROM users u JOIN child_info c on c.users_id = u.id JOIN child_info ci ON c.child_info_id = ci.id "
+    //   WHERE users_id = $1";
     const values = [users_id];
     db.query(text, values)
       .then((response) => {
-        console.log("create child res:", response.rows);
+        console.log("create child res:", response);
         next();
       })
       .catch((err) => {
@@ -88,11 +90,11 @@ const childController = {
       child_nickname,
       birthday,
       gender,
-      // users_id
+      users_id
     } = req.body;
     const text =
-      "UPDATE child_info SET child_firstname = $1, child_lastname = $2, child_nickname = $3, birthday = $4, gender = $5, WHERE id = $6";
-    const values = [child_firstname, child_lastname, child_nickname, birthday, gender, id];
+      "UPDATE child_info SET child_firstname = $1, child_lastname = $2, child_nickname = $3, birthday = $4, gender = $5";
+    const values = [child_firstname, child_lastname, child_nickname, birthday, gender];
     db.query(text, values)
       .then((response) => {
         console.log("update child res:", response);
@@ -109,4 +111,4 @@ const childController = {
   },
 };
 
-module.exports = childController;
+module.exports = feedingsController;

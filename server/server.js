@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = 3000;
-const userRouter = require('./server/routes/user');
-const childRouter = require('./server/routes/child');
+const userRouter = require('./routes/user');
+const childRouter = require('./routes/child');
+const feedingsRouter = require('./routes/feedings');
+const napsRouter = require('./routes/naps');
 
 
 
@@ -13,12 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.status(200).sendFile(path.join( __dirname, 'client/index.html'));
+    res.status(200).sendFile(path.join( __dirname, '../index.html'));
 })
 
 //define route handler
 app.use('/user', userRouter); //login and create new user
 app.use('/child', childRouter); //add or delete child from account
+app.use('/feedings', feedingsRouter); //start, end, of modify feedings
+app.use('/naps', napsRouter); //start, end, or modify naps
+// app.use('/measurements', measurementsRouter); //add weight and length measurements
 
 //redirect to 404.html if page does not exist
 app.use((req, res) => {
