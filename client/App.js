@@ -4,8 +4,12 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import theme from "./theme";
 import { styled } from "@mui/system";
+import Feedings from "./components/Feedings";
+import Naps from "./components/Naps";
+import Settings from "./components/Feedings";
 
 const UserContext = createContext([{}, () => {}]);// this format allows us to use array destructuring when usiing useContext
+const ChildIdContext = createContext([{}, () => {}]);// this format allows us to use array destructuring when usiing useContext
 
 const RootDiv = styled("div")({
   minHeight: "100vh",
@@ -15,20 +19,26 @@ const RootDiv = styled("div")({
 });
 function App() {
   const [user, setUser] = useState(null); //set user to null until login
+  const [childId, setChildId] = useState(null); //set user to null until login, this will allow us to know which child is currently selected
   return (
     <RootDiv>
       <UserContext.Provider value={[user, setUser]}>
+      <ChildIdContext.Provider value={[childId, setChildId]}>
         <Routes>
           {/* <Route index element={<App />} /> */}
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="feedings" element={<Feedings />} />
+          <Route path="naps" element={<Naps />} />
+          <Route path="settings" element={<Settings />} />
         </Routes>
+      </ChildIdContext.Provider>
       </UserContext.Provider>
     </RootDiv>
   );
 }
 
-export { App, UserContext };
+export { App, UserContext, ChildIdContext };
 
 // {/* Routes nest inside one another. Nested route paths build upon
 //           parent route paths, and nested route elements render inside

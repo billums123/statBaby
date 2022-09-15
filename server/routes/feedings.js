@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const childController = require('../controllers/childController');
+const feedingsController = require('../controllers/feedingsController');
 
-// router.get("/", (req, res) => {
-//   res.sendStatus(200);
-// });
+router.post("/list", feedingsController.getFeedings, (req, res) => {
+    res.status(200).json(res.locals.feedings)
+});
+router.post("/", feedingsController.addFeeding, (req, res) => {
+    res.sendStatus(200)
+  });
 
-// router.post("/", childController.addChild, (req, res) => {
-//   res.sendStatus(200).json(console.log('added child!'));
-// });
+  router.delete("/", feedingsController.deleteFeeding, (req, res) => {
+    res.sendStatus(200);
+  });
 
 // // router.put("/", (req, res) => {});
 
-// router.delete("/", childController.deleteChild, (req, res) => {
-//   res.sendStatus(200).json(console.log('deleted child!'));
-// });
 
 // router.put("/", childController.updateChild, (req, res) => {
 //   res.sendStatus(200).json(console.log('updated child\'s info!'));

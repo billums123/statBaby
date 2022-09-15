@@ -26,6 +26,8 @@ const theme = createTheme({
       main: '#f57c00',
       dark: '#2F3E46',
       contrastText: 'rgba(0, 0, 0, 0.87)',
+      // alert: '#FAA0A0'
+      alert: '#FF6961'
     }
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
