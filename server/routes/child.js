@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const childController = require('../controllers/childController');
 
-router.get("/", childController.getChildren, (req, res) => {
-  res.sendStatus(200).json(console.log('retrieved children!'));
+router.post("/", childController.getChildren, (req, res) => {
+  res.status(200).json(res.locals.children)
 });
 
-router.post("/", childController.addChild, (req, res) => {
+router.post("/add", childController.addChild, (req, res) => {
   res.sendStatus(200).json(console.log('added child!'));
 });
 

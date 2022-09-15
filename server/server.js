@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
 })
 
 //define route handler
-app.use('/user', userRouter); //login and create new user
-app.use('/child', childRouter); //add or delete child from account
-app.use('/feedings', feedingsRouter); //start, end, of modify feedings
-app.use('/naps', napsRouter); //start, end, or modify naps
+app.use('/api/user', userRouter); //login and create new user
+app.use('/api/child', childRouter); //add or delete child from account
+app.use('/api/feedings', feedingsRouter); //start, end, of modify feedings
+app.use('/api/naps', napsRouter); //start, end, or modify naps
 // app.use('/measurements', measurementsRouter); //add weight and length measurements
 
 //redirect to 404.html if page does not exist

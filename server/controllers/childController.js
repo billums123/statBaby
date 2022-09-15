@@ -4,12 +4,14 @@ const childController = {
   //get child_info from child_info table where id of user matches user_id
   getChildren: (req, res, next) => {
     const { users_id } = req.body;
+    console.log('booooody', req.body)
     const text =
       "SELECT c.* FROM users u JOIN child_info c ON c.users_id = u.id WHERE c.users_id = $1";
     const values = [users_id];
     db.query(text, values)
       .then((response) => {
         console.log("create child res:", response.rows);
+          res.locals.children = response.rows;
         next();
       })
       .catch((err) => {

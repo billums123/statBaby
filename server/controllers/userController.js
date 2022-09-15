@@ -1,4 +1,5 @@
 const db = require("../models/userModel");
+const path = require("path");
 const userController = {
   createNewUser: (req, res, next) => {
     const { username, password, user_firstname, user_lastname, user_email } =
@@ -29,7 +30,6 @@ const userController = {
     },
     
     verifyUser: (req, res, next) => {
-        console.log('body', req.body)
     const { username, password } = req.body;
     const text = "SELECT password, id FROM users WHERE username = $1";
     const values = [username];
@@ -45,8 +45,9 @@ const userController = {
         if(!res.locals.id) {
             //Still need to do something if user/password are incorrect
             // res.locals.failedToLogin = true;
-            console.log('Username or password are incorrect!')
-            res.redirect('client/404.html')
+            console.log('Username or password are incorrect!');
+            res.locals.id(null); //if password/username doesn't work, set ID to null
+            // res.redirect(path.resolve(__dirname,'../../client/404.html'))
         }
         next();
     })

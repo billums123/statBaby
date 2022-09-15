@@ -48,7 +48,9 @@ module.exports = {
         publicPath: '/build',
         directory: path.resolve(__dirname, "build"),
       },
-      // port: 8080,
+      proxy: {
+        '/api/': 'http://localhost:3000',
+      } 
     },
   };
   
