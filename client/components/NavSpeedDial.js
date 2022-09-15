@@ -4,7 +4,7 @@ import Backdrop from "@mui/material/Backdrop";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { Crib, Home, Restaurant, Settings } from "@mui/icons-material";
+import { BarChart, Crib, Home, Restaurant, Settings } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import theme from "../theme";
 
@@ -21,6 +21,14 @@ const actions = [
         </StyledLink>
       ),
       name: "Home",
+    },
+    {
+      icon: (
+        <StyledLink to="/charts">
+          <BarChart />
+        </StyledLink>
+      ),
+      name: "Charts",
     },
   {
     icon: (

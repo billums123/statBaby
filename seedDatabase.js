@@ -18,13 +18,20 @@
 //         gender VARCHAR(255),
 //         users_id INT
 // );
-// CREATE TABLE feedings (
-//     id SERIAL PRIMARY KEY,
-//     feeding_start TIMESTAMP,
-//     feeding_end TIMESTAMP,
-//     type_of_feeding VARCHAR(255),
-//     child_info_id INT
-// );
+CREATE TABLE feedings (
+    id SERIAL PRIMARY KEY,
+    feeding_start TIMESTAMP without Time zone default (now() at time zone 'utc'),
+    feeding_end TIMESTAMP without Time zone default (now() at time zone 'utc'),
+    type_of_feeding VARCHAR(255),
+    child_info_id INT
+);
+CREATE TABLE feedings (
+    id SERIAL PRIMARY KEY,
+    feeding_start TIMESTAMP,
+    feeding_end TIMESTAMP,
+    type_of_feeding VARCHAR(255),
+    child_info_id INT
+);
 // CREATE TABLE naps (
 //         id SERIAL PRIMARY KEY,
 //         "nap_start" TIMESTAMP,
@@ -55,7 +62,7 @@
 // ALTER TABLE "child_info" ADD CONSTRAINT "child_info_fk4" FOREIGN KEY ("users_id") REFERENCES "users"("id");
 
 
-// ALTER TABLE "feedings" ADD CONSTRAINT "feedings_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
+ALTER TABLE "feedings" ADD CONSTRAINT "feedings_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
 // ALTER TABLE "naps" ADD CONSTRAINT "naps_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
 // ALTER TABLE "lengths" ADD CONSTRAINT "lengths_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
 // ALTER TABLE "weights" ADD CONSTRAINT "weights_fk0" FOREIGN KEY ("child_info_id") REFERENCES "child_info"("id");
@@ -65,7 +72,7 @@
 // DROP TABLE users;
 // DROP TABLE children;
 // DROP TABLE child_info;
-// DROP TABLE feedings;
+DROP TABLE feedings;
 // DROP TABLE naps;
 // DROP TABLE lengths;
 // DROP TABLE weights;

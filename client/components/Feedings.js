@@ -37,26 +37,27 @@ const Feedings = () => {
   if (!user) {
     return <Navigate replace to="/login" />;
   }
+
+  const fetchFeedings = async () => {
+    const response = await fetch("api/feeding/list", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ child_info_id: childId }),
+    });
+    const newData = await response.json();
+    if (newData) {
+      setFeedingsData([...newData]);
+      setTimeout(() => setDataLoaded(true), 1000);
+    }
+  };
+  
   useEffect(() => {
     //only run if change in user is not to null
-    console.log("childID", childId);
-    const fetchFeedings = async () => {
-      const response = await fetch("api/feeding/list", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ child_info_id: childId }),
-      });
-      const newData = await response.json();
-      console.log("yayyy", newData);
-      if (newData) {
-        setFeedingsData([...newData]);
-        setTimeout(() => setDataLoaded(true), 1000);
-      }
-    };
+    // console.log("childID", childId);
     if (user) {
-      console.log("user logged in", user);
+      // console.log("user logged in", user);
       fetchFeedings();
     }
   }, []);
@@ -90,7 +91,7 @@ const Feedings = () => {
                     endTime={feeding.feeding_end}
                     feeding_id={feeding.id}
                     // onUpdateTag={fetchFeedings}
-                    // onDeleteTag={fetchFeedings}
+                    onDeleteFeeding={fetchFeedings}
                     key={(feeding.id + feeding.feeding_start).toString()}
                   />
                 ))}

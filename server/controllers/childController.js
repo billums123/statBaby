@@ -10,7 +10,7 @@ const childController = {
     const values = [users_id];
     db.query(text, values)
       .then((response) => {
-        console.log("create child res:", response.rows);
+        // console.log("create child res:", response.rows);
           res.locals.children = response.rows;
         next();
       })

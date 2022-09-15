@@ -7,6 +7,7 @@ import { styled } from "@mui/system";
 import Feedings from "./components/Feedings";
 import Naps from "./components/Naps";
 import Settings from "./components/Feedings";
+import ChartsContainer from "./components/ChartsContainer";
 
 const UserContext = createContext([{}, () => {}]);// this format allows us to use array destructuring when usiing useContext
 const ChildIdContext = createContext([{}, () => {}]);// this format allows us to use array destructuring when usiing useContext
@@ -31,6 +32,7 @@ function App() {
           <Route path="feedings" element={<Feedings />} />
           <Route path="naps" element={<Naps />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="charts" element={<ChartsContainer />} />
         </Routes>
       </ChildIdContext.Provider>
       </UserContext.Provider>

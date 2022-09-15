@@ -35,7 +35,7 @@ const feedingsController = {
   getFeedings: (req, res, next) => {
     const { child_info_id } = req.body;
     const text =
-      "SELECT f.feeding_start, f.feeding_end, f.id FROM child_info c  RIGHT OUTER JOIN feedings f ON f.child_info_id = $1" 
+      "SELECT f.feeding_start, f.feeding_end, f.id FROM feedings f WHERE f.child_info_id = $1" 
     const values = [child_info_id];
     db.query(text, values)
       .then((response) => {
