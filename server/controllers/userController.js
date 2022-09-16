@@ -5,7 +5,9 @@ const userController = {
     const { username, password, user_firstname, user_lastname, user_email } =
       req.body;
     const text =
-      "INSERT INTO users (username, password, user_firstname, user_lastname, user_email) VALUES ($1, $2, $3, $4, $5)";
+      "INSERT INTO users (username, password, user_firstname, user_lastname, user_email) VALUES ($1, $2, $3, $4, $5) RETURNING id";
+    // const text =
+    //   "INSERT INTO users (username, password, user_firstname, user_lastname, user_email) VALUES ($1, $2, $3, $4, $5) RETURNING id";
     const values = [
       username,
       password,
@@ -15,8 +17,8 @@ const userController = {
     ];
     db.query(text, values)
       .then((response) => {
-        // console.log(response);
-        // res.locals.newUser = response;
+        console.log('newUser',response)
+        res.locals.newUserId = response.rows[0].id;
         next();
       })
       .catch((err) => {
@@ -28,7 +30,35 @@ const userController = {
         });
       });
     },
-    
+    addChild: (req, res, next) => {
+      const user_id = res.locals.newUserId;
+      
+      console.log(user_id)
+      const text =
+        "INSERT INTO child_info (child_firstname, child_lastname, child_nickname, birthday, gender, users_id) VALUES ($1, $2, $3, $4, $5, $6)";
+      const values = [
+        user_id,
+        user_id,
+        user_id,
+        user_id,
+        user_id,
+        user_id
+      ];
+      db.query(text, values)
+        .then((response) => {
+          console.log("create child res:", response);
+          next();
+        })
+        .catch((err) => {
+          next({
+            status: 404,
+            message: {
+              err: "Error with request to add new child, please review input fields",
+            },
+          });
+        });
+    },
+
     verifyUser: (req, res, next) => {
     const { username, password } = req.body;
     const text = "SELECT password, id FROM users WHERE username = $1";

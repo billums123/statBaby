@@ -4,18 +4,22 @@ const childController = {
   //get child_info from child_info table where id of user matches user_id
   getChildren: (req, res, next) => {
     const { users_id } = req.body;
-    console.log('booooody', req.body)
     const text =
       "SELECT c.* FROM users u JOIN child_info c ON c.users_id = u.id WHERE c.users_id = $1";
     const values = [users_id];
     db.query(text, values)
       .then((response) => {
-        // console.log("create child res:", response.rows);
-          res.locals.children = response.rows;
+        console.log("get child res:", response.rows);
+        if (response.rows) res.locals.children = response.rows;
+        else {
+          res.locals.children = null;
+          console.log(res.locals.children)
+        }
         next();
       })
       .catch((err) => {
         next({
+          log: "can't find child",
           status: 404,
           message: {
             err: "Error with request to add new child, please review input fields",
@@ -26,15 +30,16 @@ const childController = {
 
   //add child to childrent table on db
   addChild: (req, res, next) => {
-    console.log(req.body)
+    console.log(req.body);
     const {
       child_firstname,
       child_lastname,
       child_nickname,
       birthday,
       gender,
-      users_id
+      users_id,
     } = req.body;
+    // const user_id = res.locals.newUserId;
     const text =
       "INSERT INTO child_info (child_firstname, child_lastname, child_nickname, birthday, gender, users_id) VALUES ($1, $2, $3, $4, $5, $6)";
     const values = [
@@ -43,7 +48,7 @@ const childController = {
       child_nickname,
       birthday,
       gender,
-      users_id
+      users_id,
     ];
     db.query(text, values)
       .then((response) => {
@@ -94,7 +99,14 @@ const childController = {
     } = req.body;
     const text =
       "UPDATE child_info SET child_firstname = $1, child_lastname = $2, child_nickname = $3, birthday = $4, gender = $5, WHERE id = $6";
-    const values = [child_firstname, child_lastname, child_nickname, birthday, gender, id];
+    const values = [
+      child_firstname,
+      child_lastname,
+      child_nickname,
+      birthday,
+      gender,
+      id,
+    ];
     db.query(text, values)
       .then((response) => {
         console.log("update child res:", response);

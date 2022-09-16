@@ -13,9 +13,10 @@ const napsRouter = require('./routes/naps');
 //parse request body for POST and PUT requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("client"));
 
 app.get('/', (req, res) => {
-    res.status(200).sendFile(path.join( __dirname, '../index.html'));
+  res.status(200).sendFile(path.join( __dirname, '../index.html'));
 })
 
 //define route handler
@@ -26,8 +27,8 @@ app.use('/api/nap', napsRouter); //start, end, or modify naps
 // app.use('/measurements', measurementsRouter); //add weight and length measurements
 
 //redirect to 404.html if page does not exist
-app.use((req, res) => {
-    res.status(404).sendFile(path.join( __dirname, 'client/404.html'));
+app.use('/*', (req, res) => {
+  res.status(200).sendFile(path.join( __dirname, '../index.html'));
 })
 
 //global error handler

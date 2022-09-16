@@ -6,7 +6,7 @@ import theme from "./theme";
 import { styled } from "@mui/system";
 import Feedings from "./components/Feedings";
 import Naps from "./components/Naps";
-import Settings from "./components/Feedings";
+import Settings from "./components/Settings";
 import ChartsContainer from "./components/ChartsContainer";
 
 const UserContext = createContext([{}, () => {}]);// this format allows us to use array destructuring when usiing useContext

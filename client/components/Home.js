@@ -1,7 +1,7 @@
 //NEED TO INDCLUDE SHOW PASSWORD OPTION
 import React, { useState, useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { Button, TextField, Box, Stack } from "@mui/material";
+import { Button, TextField, Box, Stack, CircularProgress } from "@mui/material";
 import { styled } from "@mui/system";
 import theme from "../theme";
 import { UserContext } from "../App";
@@ -18,19 +18,28 @@ const StartButton = styled(Button)({
 
 function toIsoString(date) {
   var tzo = -date.getTimezoneOffset(),
-      dif = tzo >= 0 ? '+' : '-',
-      pad = function(num) {
-          return (num < 10 ? '0' : '') + num;
-      };
+    dif = tzo >= 0 ? "+" : "-",
+    pad = function (num) {
+      return (num < 10 ? "0" : "") + num;
+    };
 
-  return date.getFullYear() +
-      '-' + pad(date.getMonth() + 1) +
-      '-' + pad(date.getDate()) +
-      'T' + pad(date.getHours()) +
-      ':' + pad(date.getMinutes()) +
-      ':' + pad(date.getSeconds()) +
-      dif + pad(Math.floor(Math.abs(tzo) / 60)) +
-      ':' + pad(Math.abs(tzo) % 60);
+  return (
+    date.getFullYear() +
+    "-" +
+    pad(date.getMonth() + 1) +
+    "-" +
+    pad(date.getDate()) +
+    "T" +
+    pad(date.getHours()) +
+    ":" +
+    pad(date.getMinutes()) +
+    ":" +
+    pad(date.getSeconds()) +
+    dif +
+    pad(Math.floor(Math.abs(tzo) / 60)) +
+    ":" +
+    pad(Math.abs(tzo) % 60)
+  );
 }
 
 const Home = () => {
@@ -49,7 +58,8 @@ const Home = () => {
     napStart: null,
     napEnd: null,
   });
-
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [userHasChild, setUserHasChild] = useState(false);
   //make fetch request once timerStartStatus end times don't equal 0.
   useEffect(() => {
     if (feedingStatus.feedingEnd) {
@@ -72,10 +82,9 @@ const Home = () => {
     if (typeOfActivity === "nap")
       body = {
         nap_start: napStatus.napStart,
-        nap_end: feedingStatus.feedingEnd,
+        nap_end: napStatus.napEnd,
         child_info_id: children[0].id,
       };
-    console.log("body", body);
     fetch(`api/${typeOfActivity}`, {
       method: "POST", // or 'PUT'
       headers: {
@@ -113,10 +122,10 @@ const Home = () => {
     if (e.target.id === "nap") {
       if (timerStartStatus.napTimer === false) {
         setTimerStartStatus({ ...timerStartStatus, napTimer: true });
-        setNapStatus({ ...napStatus, napStart: currentDate.toString() });
+        setNapStatus({ ...napStatus, napStart: toIsoString(currentTime) });
       } else {
         setTimerStartStatus({ ...timerStartStatus, napTimer: false });
-        setNapStatus({ ...napStatus, napEnd: currentDate.toString() });
+        setNapStatus({ ...napStatus, napEnd: toIsoString(currentTime) });
       }
     }
   };
@@ -129,6 +138,7 @@ const Home = () => {
   useEffect(() => {
     //only run if change in user is not to null
     const fetchChildren = async () => {
+      console.log('home', user)
       const response = await fetch("api/child", {
         method: "POST", // or 'PUT'
         headers: {
@@ -138,10 +148,20 @@ const Home = () => {
       });
       const newData = await response.json();
       if (newData) {
+        console.log(newData)
         //store first child id in childIdContext
-        setChildId(newData[0].id)
-        setChildren([...newData])
-      };
+        if(newData != undefined){
+          console.log('worked')
+          setChildId(newData[0].id)
+          setChildren([...newData]);
+          setUserHasChild(true);
+        }  
+        else{
+          setUserHasChild(false);
+        }
+        // setChildId(newData[0].id);
+      }
+      setTimeout(() => setDataLoaded(true), 750);
     };
     if (user) {
       fetchChildren();
@@ -152,55 +172,66 @@ const Home = () => {
 
   // }
   return (
-    <Box
-      display="flex"
-      //   margin="auto"
-      height="100vh"
-      width="100%"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      //   component="form"
-      //   backgroundColor="blue"
-    >
-      <StartButton
-        id="feeding"
-        variant="contained"
-        label="Children"
-        onClick={handleTimers}
-        sx={{
-          width: "75%",
-          marginTop: "20px",
-          color: timerStartStatus.feedingTimer
-            ? theme.palette.secondary.light
-            : theme.palette.custom.dark,
-          backgroundColor: timerStartStatus.feedingTimer
-            ? theme.palette.custom.dark
-            : theme.palette.primary.main,
-        }}
-      >
-        {timerStartStatus.feedingTimer ? "End Feeding" : "Start Feeding"}
-      </StartButton>
-      <StartButton
-        id="nap"
-        variant="contained"
-        label="Children"
-        onClick={handleTimers}
-        sx={{
-          width: "75%",
-          marginTop: "20px",
-          color: timerStartStatus.napTimer
-            ? theme.palette.secondary.light
-            : theme.palette.custom.dark,
-          backgroundColor: timerStartStatus.napTimer
-            ? theme.palette.custom.dark
-            : theme.palette.primary.main,
-        }}
-      >
-        {timerStartStatus.napTimer ? "End Nap" : "Start Nap"}
-      </StartButton>
-      <NavSpeedDial/>
-    </Box>
+    <div>
+      {!dataLoaded ? (
+        <CircularProgress sx={{ position: "fixed", top: "45%", left: "45%" }} />
+      ) : (
+        <Box
+          display="flex"
+          //   margin="auto"
+          height="100vh"
+          width="100%"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          //   component="form"
+          //   backgroundColor="blue"
+        >
+          
+          <StartButton
+            id="feeding"
+            display= "none"
+            variant="contained"
+            label="Children"
+            disabled={!userHasChild}
+            
+            onClick={handleTimers}
+            sx={{
+              width: "75%",
+              marginTop: "20px",
+              color: timerStartStatus.feedingTimer
+                ? theme.palette.secondary.light
+                : theme.palette.custom.dark,
+              backgroundColor: timerStartStatus.feedingTimer
+                ? theme.palette.custom.dark
+                : theme.palette.primary.main,
+            }}
+          >
+            {timerStartStatus.feedingTimer ? "End Feeding" : "Start Feeding"}
+          </StartButton>
+          <StartButton
+            id="nap"
+            variant="contained"
+            label="Children"
+            disabled={!userHasChild}
+            onClick={handleTimers}
+            sx={{
+              width: "75%",
+              marginTop: "20px",
+              color: timerStartStatus.napTimer
+                ? theme.palette.secondary.light
+                : theme.palette.custom.dark,
+              backgroundColor: timerStartStatus.napTimer
+                ? theme.palette.custom.dark
+                : theme.palette.primary.main,
+            }}
+          >
+            {timerStartStatus.napTimer ? "End Nap" : "Start Nap"}
+          </StartButton>
+          <NavSpeedDial />
+        </Box>
+      )}
+    </div>
   );
 };
 
