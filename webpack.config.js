@@ -23,34 +23,25 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          //   MiniCssExtractPlugin.loader, //when using production config, use MiniCssExtractPlugin instead of style-loader
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
-          "sass-loader",
-        ],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
   //   plugins: [new MiniCssExtractPlugin({filename: 'trine.css'}), new HtmlWebpackPlugin({
-    plugins: [
-      new HtmlWebpackPlugin({
-        // hash: true,
-        title: 'Development',
-        template: "./index.html", //THIS IS IMPORTANT TO GET INDEX.HTML TO LOAD AFTER YOU ADD DEV SERVER!!!!!
-      }),
-    ],
-    devServer: {
-      static: {
-        publicPath: '/build',
-        directory: path.resolve(__dirname, "build"),
-      },
-      proxy: {
-        '/api/': 'http://localhost:3000',
-      } 
+  plugins: [
+    new HtmlWebpackPlugin({
+      // hash: true,
+      title: "Development",
+      template: "./index.html", //THIS IS IMPORTANT TO GET INDEX.HTML TO LOAD AFTER YOU ADD DEV SERVER!!!!!
+    }),
+  ],
+  devServer: {
+    static: {
+      publicPath: "/build",
+      directory: path.resolve(__dirname, "build"),
     },
-  };
-  
+    proxy: {
+      "/api/": "http://localhost:3000",
+    },
+  },
+};
